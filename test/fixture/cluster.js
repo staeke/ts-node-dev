@@ -1,14 +1,14 @@
-var cluster = require('cluster');
+const cluster = require('cluster')
 
 function createWorker() {
-  var worker = cluster.fork();
+  const worker = cluster.fork()
   worker.on('message', function (msg) {
     console.log('Message from worker:', msg);
   });
 }
 
 if (cluster.isMaster) {
-  for (var i = 0; i < 2; i++) {
+  for (let i = 0; i < 2; i++) {
     console.log('Forking worker', i);
     createWorker();
   }
