@@ -1,10 +1,10 @@
-var child = require('child_process');
-var test = require('tap').test;
-var touch = require('touch');
+const child = require('child_process')
+const test = require('tap').test
+const touch = require('touch')
 
-var dir = __dirname + '/fixture';
-var bin = __dirname + '/../bin/node-dev';
-var msgFile = dir + '/message.js';
+const dir = __dirname + '/fixture'
+const bin = __dirname + '/../bin/node-dev'
+const msgFile = dir + '/message.js'
 
 // Helpers
 function touchFile(file) {
@@ -14,9 +14,9 @@ function touchFile(file) {
 }
 
 function spawn(cmd, cb) {
-  var ps = child.spawn('node', [bin].concat(cmd.split(' ')), { cwd: dir });
-  var out = '';
-  var err = '';
+  const ps = child.spawn('node', [bin].concat(cmd.split(' ')), { cwd: dir })
+  let out = ''
+  let err = ''
 
   if (cb) {
 
@@ -32,7 +32,7 @@ function spawn(cmd, cb) {
 
     ps.stdout.on('data', function (data) {
       out += data.toString();
-      var ret = cb.call(ps, out);
+      const ret = cb.call(ps, out)
       if (typeof ret == 'function') {
         // use the returned function as new callback
         cb = ret;
@@ -96,11 +96,11 @@ test('should restart the server twice', function (t) {
 
 /*
 test('should not restart the server for ignored modules', function (t) {
-  var ps = spawn('server.js', function (out) {
+  const ps = spawn('server.js', function (out) {
     if (out.match(/touch message.js/)) {
       setTimeout(touchFile(ignoredFile), 500);
 
-      var successTimeoutId = setTimeout(function () {
+      const successTimeoutId = setTimeout(function () {
         ps.removeAllListeners('exit');
         ps.kill();
 
@@ -136,7 +136,7 @@ test('should support coffee-script', function (t) {
 
 /*
 test('should restart when a file is renamed', function (t) {
-  var tmp = dir + '/message.tmp';
+  const tmp = dir + '/message.tmp';
   fs.writeFileSync(tmp, MESSAGE);
   spawn('log.js', function (out) {
     if (out.match(/touch message.js/)) {
@@ -192,7 +192,7 @@ test('should ignore caught errors', function (t) {
 
 test('should not show up in argv', function (t) {
   spawn('argv.js foo', function (out) {
-    var argv = JSON.parse(out.replace(/'/g, '"'));
+    const argv = JSON.parse(out.replace(/'/g, '"'))
     t.like(argv[0], /.*?node(js|\.exe)?$/);
     t.is(argv[1], 'argv.js');
     t.is(argv[2], 'foo');
@@ -224,7 +224,7 @@ test('should relay stdin', function (t) {
 
 test('should kill the forked processes', function (t) {
   spawn('pid.js', function (out) {
-    var pid = parseInt(out, 10);
+    const pid = parseInt(out, 10)
     return { exit: function () {
       setTimeout(function () {
         try {

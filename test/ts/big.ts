@@ -3,7 +3,7 @@
 // Definitions by: Erwin Poeze <https://github.com/donnut>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
-declare var R: R.Static;
+declare const R: R.Static;
 //
 declare namespace R {
 

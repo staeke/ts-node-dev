@@ -1,7 +1,7 @@
-var vm = require('vm');
-var fs = require('fs');
-var file = __dirname + '/log.js';
-var str = fs.readFileSync(file, 'utf8');
+const vm = require('vm')
+const fs = require('fs')
+const file = __dirname + '/log.js'
+const str = fs.readFileSync(file, 'utf8')
 
 if(process.argv.length > 2 && process.argv[2] === 'nofile') {
   vm.runInNewContext(str, { module: {}, require: require, console: console });
